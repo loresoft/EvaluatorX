@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AwesomeAssertions" />
+    <PackageReference Include="coverlet.MTP" />
+    <PackageReference Include="Testcontainers.MsSql" />
+    <PackageReference Include="XUnit.Hosting" />
+    <PackageReference Include="xunit.v3.mtp-v2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EvaluatorX.Core\EvaluatorX.Core.csproj" />
+    <ProjectReference Include="..\..\src\EvaluatorX.Migrations.SqlServer\EvaluatorX.Migrations.SqlServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\EvaluatorX.Core.Tests\Domain\**\*.cs" LinkBase="Domain" />
+    <Compile Include="..\EvaluatorX.Core.Tests\MockBaseAddressResolver.cs" Link="MockBaseAddressResolver.cs" />
+    <Compile Include="..\EvaluatorX.Core.Tests\MockClaimsPrincipal.cs" Link="MockClaimsPrincipal.cs" />
+    <Compile Include="..\EvaluatorX.Core.Tests\Fixtures\DatabaseSeeder.cs" Link="Fixtures\DatabaseSeeder.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="AwesomeAssertions" />
+    <Using Include="EvaluatorX.Core.SqlServer.Tests.Fixtures" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,101 @@
+name: Build Project
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_ENVIRONMENT: github
+  ASPNETCORE_ENVIRONMENT: github
+  BUILD_PATH: "${{github.workspace}}/artifacts"
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-project:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+
+      - name: Install Sass Tool
+        run: npm i -g sass
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Build Solution
+        run: "dotnet build --no-restore --configuration Release"
+
+      - name: Publish Web Application
+        if: success()
+        run: 'dotnet publish ./src/EvaluatorX.Web/EvaluatorX.Web.csproj --no-restore --configuration Release --output "${{env.BUILD_PATH}}/Application"'
+
+      - name: Create Web Application Zip
+        if: success()
+        working-directory: "${{env.BUILD_PATH}}/Application"
+        run: 'zip -r "${{env.BUILD_PATH}}/EvaluatorX.Web.zip" .'
+
+      - name: Upload Web Application Artifact
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: Application
+          path: "${{env.BUILD_PATH}}/EvaluatorX.Web.zip"
+
+      - name: Login GitHub Container Registry
+        if: success() && github.event_name != 'pull_request'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Container Metadata
+        id: meta
+        if: success() && github.event_name != 'pull_request'
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/loresoft/evaluatorx
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
+
+      - name: Publish Container Image
+        if: success() && github.event_name != 'pull_request'
+        env:
+          META_TAGS: ${{steps.meta.outputs.tags}}
+        run: |
+          # metadata-action emits full image references; the SDK expects only the tags, separated by ';'
+          TAGS=$(echo "$META_TAGS" | sed 's|.*:||' | paste -sd ';' -)
+          dotnet publish ./src/EvaluatorX.Web/EvaluatorX.Web.csproj \
+            --configuration Release \
+            -t:PublishContainer \
+            -p:ContainerRegistry=ghcr.io \
+            -p:ContainerImageTags="\"$TAGS\""
+

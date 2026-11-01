@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/Build/">
+    <File Path=".github/workflows/dotnet.yml" />
+    <File Path="Directory.Packages.props" />
+    <File Path="README.md" />
+    <File Path="src/Directory.Build.props" />
+  </Folder>
+  <Folder Name="/Migrations/">
+    <Project Path="src/EvaluatorX.Migrations.PostgreSql/EvaluatorX.Migrations.PostgreSql.csproj" Id="4653c4bf-aee2-4337-8012-e6ee203d8aa6" />
+    <Project Path="src/EvaluatorX.Migrations.Sqlite/EvaluatorX.Migrations.Sqlite.csproj" Id="adb9ea53-9aa1-40b5-8751-7665928698d9" />
+    <Project Path="src/EvaluatorX.Migrations.SqlServer/EvaluatorX.Migrations.SqlServer.csproj" Id="78eb1ac2-080c-44d8-9259-4b79d5dfd006" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="test/EvaluatorX.Core.PostgreSql.Tests/EvaluatorX.Core.PostgreSql.Tests.csproj" Id="362577c5-7442-428b-80c8-b378d4e1d303" />
+    <Project Path="test/EvaluatorX.Core.SqlServer.Tests/EvaluatorX.Core.SqlServer.Tests.csproj" Id="ff664217-9946-47fe-8108-2f783c5ebcdb" />
+    <Project Path="test/EvaluatorX.Core.Tests/EvaluatorX.Core.Tests.csproj" Id="a5543e6b-6345-4996-8164-35b742e38c91" />
+  </Folder>
+  <Project Path="src/EvaluatorX.Core/EvaluatorX.Core.csproj" Id="be4be2af-de73-4e9f-a40d-99ee1b59a2f4" />
+  <Project Path="src/EvaluatorX.Shared/EvaluatorX.Shared.csproj" Id="d64b06df-ad7c-46f4-bf30-c91e5d632064" />
+</Solution>
