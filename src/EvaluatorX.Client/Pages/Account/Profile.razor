@@ -1,0 +1,109 @@
+@page "/account/profile"
+@inherits EditPageBase<long, UserReadModel, UserUpdateModel>
+@attribute [Authorize]
+
+<PageTitle>@PageTitle() - EvaluatorX</PageTitle>
+
+<div class="container-fluid">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@RouteLinks.Home()">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Profile
+            </li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container-xxl">
+    <div class="card shadow mb-5">
+        <div class="card-header d-flex align-items-center">
+            <h5 class="m-0 me-auto">
+                Profile
+            </h5>
+            <Tabs />
+        </div>
+        <LoadingBlock IsLoading="EditContext == null || Store.Model == null">
+            <EditForm EditContext="EditContext" OnValidSubmit="HandleSave">
+                <FluentValidator />
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ValidationSummary />
+                        </div>
+                    </div>
+
+                    <!-- Edit Form -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="Name" class="form-label">
+                                    Name: <span class="text-danger">*</span>
+                                </label>
+                                <InputText @bind-Value="Store.Model!.Name"
+                                           DisplayName="Name"
+                                           id="Name"
+                                           name="Name"
+                                           class="form-control"
+                                           placeholder="Name" />
+                                <ValidationMessage For="@(() => Store.Model.Name)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Email" class="form-label">
+                                    Email: <span class="text-danger">*</span>
+                                </label>
+                                <InputText @bind-Value="Store.Model!.Email"
+                                           DisplayName="Email"
+                                           id="Email"
+                                           name="Email"
+                                           type="email"
+                                           class="form-control"
+                                           placeholder="Name" />
+                                <ValidationMessage For="@(() => Store.Model.Email)" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <Gravatar Email="@Store.Model.Email"
+                                      class="rounded-circle d-block mx-auto"
+                                      Size="200" />
+
+                            <p class="text-center">
+                                You can change your picture at <a href="http://gravatar.com/" target="_blank">Gravatar.com</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <!-- Form Buttons -->
+                    <div class="row">
+                        <div class="col">
+                            <BusyButton id="save-button"
+                                        type="submit"
+                                        Busy="Store.IsBusy"
+                                        Disabled="Store.IsClean"
+                                        class="btn btn-primary">
+                                Save
+                            </BusyButton>
+                        </div>
+                    </div>
+                </div>
+            </EditForm>
+        </LoadingBlock>
+    </div>
+</div>
+
+@code
+{
+    protected override async Task OnParametersSetAsync()
+    {
+        Id = await base.GetUserId<long>();
+        await base.OnParametersSetAsync();
+    }
+
+    protected override string? GetRedirectLocation(RedirectReason reason, long id)
+        => RouteLinks.Account.Profile();
+}

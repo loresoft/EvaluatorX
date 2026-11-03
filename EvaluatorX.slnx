@@ -17,4 +17,6 @@
   </Folder>
   <Project Path="src/EvaluatorX.Core/EvaluatorX.Core.csproj" Id="be4be2af-de73-4e9f-a40d-99ee1b59a2f4" />
   <Project Path="src/EvaluatorX.Shared/EvaluatorX.Shared.csproj" Id="d64b06df-ad7c-46f4-bf30-c91e5d632064" />
+  <Project Path="src/EvaluatorX.Client/EvaluatorX.Client.csproj" Id="7df91057-de95-4d79-9901-c533c141af2e" />
+  <Project Path="src/EvaluatorX.Web/EvaluatorX.Web.csproj" Id="0e79b7a2-cb7b-4035-85bd-62af477511eb" />
 </Solution>

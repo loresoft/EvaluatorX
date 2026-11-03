@@ -1,0 +1,59 @@
+<header class="d-print-none">
+    <nav id="navbar-main"
+         class="navbar navbar-expand-sm navbar-light navbar-default fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand"
+               href="@RouteLinks.Home()"
+               style="padding: 0">
+                <img src="/logo-full.svg"
+                     alt="EvaluatorX"
+                     height="35" />
+            </a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-main-menu"
+                    aria-controls="navbar-main-menu"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse"
+                 id="navbar-main-menu">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <AuthorizeView Roles="@RoleNames.Administrators">
+                        <!-- Administrative -->
+                        <li class="nav-item dropdown">
+                            <a id="navbar-main-administrative"
+                               role="button"
+                               href="#"
+                               class="nav-link dropdown-toggle"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                Administrative
+                            </a>
+                            <ul class="dropdown-menu"
+                                aria-labelledby="navbar-main-administrative">
+                                <li>
+                                    <a id="navbar-main-administrative-logins"
+                                       class="dropdown-item"
+                                       href="@RouteLinks.Administrative.Logins()">
+                                        User Logins
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </AuthorizeView>
+                </ul>
+                <!-- User Menu -->
+                <ul class="navbar-nav me-4">
+                    <ProfileMenu />
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+@code {
+
+}
