@@ -38,7 +38,7 @@
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.15" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.13" />
     <PackageVersion Include="MinVer" Version="8.0.0" />
-    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.4" />
     <PackageVersion Include="Spectre.Console.Cli" Version="0.57.2" />
     <PackageVersion Include="Testcontainers.MsSql" Version="4.17.0" />
     <PackageVersion Include="Testcontainers.Postgresql" Version="4.17.0" />
